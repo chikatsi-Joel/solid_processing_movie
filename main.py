@@ -249,7 +249,7 @@ if __name__=="__main__" :
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app = QApplication(sys.argv)
-    input = Main_Application({"id" : 3, "name" : "Joel", 'age' : 23, 'solde' : 189211.1212}, settings = QWidget())
+    input = Main_Application({"id" : 3, "name" : "Joel", 'age' : 21, 'solde' : 189211.1212}, settings = QWidget())
     input.set_settings(parameters_interface.parameters_interface("ui/Images/moi.png", "Joel", "https://beta.theb.ai/home", 21, 500, 800, "kappachikatsi@gmail.com", "Promotteur en chef du projet et Etudiant en licence 3 à l'université de Yaoundé 1"))
     input.show()
     app.exec()
