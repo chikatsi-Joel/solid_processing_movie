@@ -1,0 +1,28 @@
+QFrame#frame{
+    border: 1px solid grey;
+    border-radius: 10px;
+    color: white;
+    background-color: blue;
+}
+
+QLabel{
+    color: white;
+    font: "Ubuntu";
+}
+
+QFrame#user{
+    border: 1px solid rgb(79, 79, 79);
+    border-radius: 10px;
+    background-color: rgb(45, 45, 45);
+}
+
+QFrame#ia{
+    border: 1px solid rgb(79, 79, 79);
+    border-radius: 10px;
+    background-color: rgb(0, 45, 45);
+}
+
+QFrame#zone_mess{
+    border: 1px solid grey;
+    border-radius: 10px;
+}

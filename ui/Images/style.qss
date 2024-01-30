@@ -1,0 +1,16 @@
+QWidget{
+    background-color: rgb(42, 42, 42);
+}
+
+QFrame#frame{
+    border: 1px solid rgb(79, 79, 79);
+    border-radius: 10px;
+    background-color: rgb(45, 45, 45);
+}
+
+QFrame#fra{
+    border: None;
+    border-radius: 10px;
+    background-color: rgb(45, 45, 45);
+}
+
