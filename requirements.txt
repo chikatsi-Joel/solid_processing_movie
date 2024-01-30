@@ -1,0 +1,7 @@
+PyQt5
+pysrt
+pytube
+requests
+moviepy
+googletrans
+PyQt5-Frameless-Window
