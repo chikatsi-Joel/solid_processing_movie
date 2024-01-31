@@ -105,6 +105,8 @@ class Main_Application(FluentWindow) :
         )
 
         self.setWindowIcon(QIcon("ui/Images/logo.png"))
+        self.titleBar
+        self.setWindowTitle("Video Processing")
 
         
         self.youtube_interface.barr.send.clicked.connect(self.slots_youtube_down)
@@ -249,7 +251,7 @@ class Main_Application(FluentWindow) :
 if __name__=="__main__" :
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)  
     app = QApplication(sys.argv)
     input = Main_Application({"id" : 3, "name" : "Joel", 'age' : 20, 'solde' : 189211.1212}, settings = QWidget())
     input.show()

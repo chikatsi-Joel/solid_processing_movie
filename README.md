@@ -1,31 +1,31 @@
 # Video Processing ..#Nom de l'application
 
-
-cette application a été rigouresemnt developpé permettant 
-la maintenabilité et l'évolution du code sans nuir au noyau
+This application has been rigorously developed to ensure the maintainability and evolution of the code without compromising the core.
 
 
 ## Fonctionnalités
 
-Cette application permet de :
-- visionner des vidéos
-- retranscrire les vidéos visionnées
-- télécharger des vidéos depuis youtube
-- visionner les vidéos ainsi que leurs retranscriptions
-- générer un fichier pdf ou srt concernant le contenu de la vidéo ou du timestamp de la vidéo
+This application allows you to:
 
+- Watch videos
+- Transcribe watched videos
+- Download videos from YouTube
+- View videos along with their transcriptions
+- Generate a PDF or SRT file regarding the content of the video or the video timestamp
 
+## Youtube Place Interface
+![Image de visualisation de l'interface youtube](/home/chikatsi/Bureau/Application/ui/Images/cap1.png)
 ## Prérequis
 - Python 3.x
 - PyQt5
 - QFluentWidgets
 - googletrans
 ...
-tout est listé dans
+everything is listed in
 requirements.txt
 
 ## Installation
 
-1. Clonez ce dépôt :
+1. Clone this repository:
    ```bash
    git clone https://github.com/chikatsi-Joel/solid_processing_movie.git
