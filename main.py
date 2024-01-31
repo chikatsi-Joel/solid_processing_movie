@@ -7,7 +7,7 @@ from ui import (
     parameters_interface
 )
 from interface.download import DownLaod
-import interface.decorator as decorator
+from interface.decorator import decorator
 from logique_metier.server.backbone import send_file
 from logique_metier.server import server
 from logique_metier.generate.download_file import download_on_youtube
@@ -131,7 +131,7 @@ class Main_Application(FluentWindow) :
     """
     Slots pour le téléchargement des vidéos youtube
     """
-    #@decorator.Verification(type = "youtube")
+    @decorator.youtube_verification
     def slots_youtube_down(self) : 
         params = {
             "url_video" : self.youtube_interface.barr.edit.text().strip(),
@@ -149,6 +149,7 @@ class Main_Application(FluentWindow) :
     """
     Slots de génération de fichier srt via youtube
     """
+    @decorator.precision_verification
     def slots_youtube_srt_generate(self) :
         try :
             params = self.youtube_interface.precision.get_params()
@@ -179,6 +180,7 @@ class Main_Application(FluentWindow) :
     """
     Slots de génération de srt d'une vidéo
     """
+    @decorator.precision_verification
     def slots_srt_generate_video(self) :
         try :
             params = self.video_retranscribe_interface.precision.get_params()

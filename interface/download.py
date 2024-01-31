@@ -6,7 +6,7 @@ from logique_metier.abstract_logic.abstract_download import abstract_download
 
 class DownLaod(QThread) :
     endDownload = pyqtSignal(str)
-    lienInexistant = pyqtSignal()
+    lienInexistant = pyqtSignal(str)
     erreur = pyqtSignal(str)
 
     def __init__(self, download_type : abstract_download) :
@@ -21,6 +21,8 @@ class DownLaod(QThread) :
             path = download_file_logic.download(self.download_type)
             self.endDownload.emit(path)
         except RegexMatchError as e : 
-            self.lienInexistant.emit()
+            self.lienInexistant.emit("waouh")
+            return
         except Exception as e :
             self.erreur.emit(str(e))
+            return

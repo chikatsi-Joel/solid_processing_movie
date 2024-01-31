@@ -5,7 +5,6 @@ import sys
 from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
 from ui import Setup
-from interface.decorator import Verification
         
 
 class CardSeparator(QWidget):
@@ -102,6 +101,8 @@ class Precision(HeaderCardWidget) :
             self.timer.stop()
             
     def tarif_slot(self) :
+        if self.precision.text().strip() == "" :
+            return
         if (montant :=Setup.Setup.tarif(int(self.precision.text()))) == 0 :
             self.montant_tarifaire.setText(""), self.montant.setText("")
         else :

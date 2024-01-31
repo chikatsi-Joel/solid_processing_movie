@@ -27,11 +27,11 @@ class CardSeparator(QWidget):
         painter.drawLine(2, 1, self.width() - 2, 1)
         
 class Input_Data(HeaderCardWidget) :
-    def __init__(self, parent : QWidget | None = None) :
-        super(Input_Data, self).__init__(parent)
+    def __init__(self, parent : QWidget) :
+        super(Input_Data, self).__init__(parent = parent)
         self.central = QHBoxLayout()
         self.frame, self.vbox = QFrame(), QVBoxLayout()
-        self.youtu, self.path = None, None
+        self.youtu, self.path_folder = None, ""
         self.edit, self.label = LineEdit(), BodyLabel("Entrer le lien youtube  : ")
         self.definition, label = ComboBox(), BodyLabel("Choisissez le format : ")
         self.edit_nom_video, label_name = LineEdit(), BodyLabel("Nom de la Video : ") 
@@ -93,18 +93,20 @@ class Input_Data(HeaderCardWidget) :
             "Chemin d'accès  : "
         )
         if dir_name:
-            self.path = str(Path(dir_name))
+            self.path_folder = str(Path(dir_name))
             print(str(Path(dir_name)))
     
-        
+    @pyqtSlot()
     def slots_lien_In(self) :
+        print("err")
         InfoBar.warning(
                 "Lien Youtube Inexistant.",
-                "Le lien que vous avez entrer n'existe pas.",
+                "\nLe lien que vous avez entrer n'existe pas.\n\n",
                 duration = 6000,
                 parent = self.par
         )
     
+    @pyqtSlot(str)
     def slots_lien_err(self, erreur : str) :
         InfoBar.warning(
                 "Une Erreur c'est produite.",
@@ -121,8 +123,10 @@ class Input_Data(HeaderCardWidget) :
             QMessageBox.StandardButton.Yes |
             QMessageBox.StandardButton.No
         )
-        
-    def endDown(self) :
+    
+    @pyqtSlot(str)
+    def endDown(self, path : str) :
+        self.path_video_download = path
         InfoBar.success(
             "Téléchargement terminé",
             "Votre téléchargement c'est achevé avec succès",
@@ -145,8 +149,8 @@ class Input_Data(HeaderCardWidget) :
         
     
 class Interface(QWidget) :
-    def __init__(self) :
-        super(Interface, self).__init__()
+    def __init__(self, parent : QWidget | None = None) :
+        super(Interface, self).__init__(parent)
         self.vbox = QHBoxLayout(self)
         vbox = QVBoxLayout()
 
@@ -177,11 +181,12 @@ class Interface(QWidget) :
                 position = InfoBarPosition.TOP_RIGHT,
                 parent = self
             )
+
         
     def get_url_video(self ) -> str:
-        if self.barr.path.strip() == "" :
+        if self.barr.path_video_download.strip() == "" :
             raise AttributeError("Selectionner le dossier de destination.")
-        return self.barr.path + '/' + self.barr.edit_nom_video.text() + '.mp4'
+        return self.barr.path_video_download
     
     def get_url_srt(self) -> str:
         return self.precision.srt_path
