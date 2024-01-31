@@ -15,6 +15,7 @@ This application allows you to:
 
 ## Youtube Place Interface
 ![Youtube Place Interface](ui/Images/cap1.png)
+## Retranscription video Place
 ![Transcription zone for video and data configuration.](ui/Images/cap2.png)
 ## Prérequis
 - Python 3.x
