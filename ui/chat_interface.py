@@ -39,7 +39,7 @@ class ZoneMessage(QFrame) :
         self.container.addSpacerItem(QSpacerItem(30, 90))
         self.container.addWidget(SubtitleLabel("ADMINISTRATION" if type == 'admin' else "Vous"))
         self.container.addWidget(sep)
-        self.container.addWidget(lab := BodyLabel(mess + f"\n\n\t\t\t\t\t\t\t{datetime.datetime.now().strftime("%H:%M")}"))
+        self.container.addWidget(lab := BodyLabel(mess))
         lab.setWordWrap(True)
         lab.setFixedWidth(500)
         if type == 'user' :
