@@ -50,11 +50,22 @@ class ZoneMessage(QFrame) :
         self.scroll_widget.setMinimumSize(self.scroll_widget.sizeHint())
         self.scroll_areea.verticalScrollBar().setValue(self.scroll_areea.verticalScrollBar().maximum())
 
+class PlainTextEditModifie(PlainTextEdit) :
+    def __init__(self, parent : QWidget, **kwargs) :
+        super(PlainTextEditModifie, self).__init__(parent, **kwargs)
+        self.vcentral = QHBoxLayout(self)
+        self.send = LineEditButton(FIF.SEND, parent = self)
+        self.send.setFixedSize(50, 50)
+
+        self.vcentral.addWidget(self.send, 0, Qt.AlignmentFlag.AlignRight)
+
+
+
 class Zone_Saisie(QWidget) :
     def __init__(self, parent : QWidget | None = None) :
         super(Zone_Saisie, self).__init__(parent)
         self.central = QHBoxLayout(self)
-        self.writable = PlainTextEdit()
+        self.writable = PlainTextEditModifie(self)
         
         self.writable.setFixedHeight(80)
         self.central.addWidget(self.writable)

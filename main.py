@@ -110,7 +110,7 @@ class Main_Application(FluentWindow) :
         self.youtube_interface.barr.send.clicked.connect(self.slots_youtube_down)
         self.youtube_interface.precision.video.valider.clicked.connect(self.slots_youtube_srt_generate)
         self.video_retranscribe_interface.precision.video.valider.clicked.connect(self.slots_srt_generate_video)
-        #self.help.chat.zone_saisie.writable.send.clicked.connect(self.send_message_slots)
+        self.help.chat.zone_saisie.writable.send.clicked.connect(self.send_message_slots)
 
         self.setFixedSize(1250, 680)
 
