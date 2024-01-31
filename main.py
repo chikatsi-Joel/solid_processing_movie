@@ -122,11 +122,6 @@ class Main_Application(FluentWindow) :
         self.help.chat.zone_message.add_widget(text)
         self.help.chat.zone_saisie.writable.clear()
 
-    
-
-    def set_settings(self, sett_interface : QWidget) :
-        self.settings = sett_interface
-        self.settings.setObjectName("setting")
 
     """
     Slots pour le téléchargement des vidéos youtube
@@ -135,13 +130,17 @@ class Main_Application(FluentWindow) :
     def slots_youtube_down(self) : 
         params = {
             "url_video" : self.youtube_interface.barr.edit.text().strip(),
-            "url_destination" : self.youtube_interface.barr.path,
+            "url_destination" : self.youtube_interface.barr.path_folder,
             "file_name" : self.youtube_interface.barr.edit_nom_video.text().strip(),
         }
         self.down = DownLaod(download_on_youtube(**params))
         self.down.start()
 
+        self.stateTooltip = StateToolTip('Patientez un instant', 'Votre téléchargement est en cours.\nPatientez svp...', self)
+        self.stateTooltip.show()
+
         self.down.endDownload.connect(self.youtube_interface.barr.endDown)
+        self.down.endDownload.connect(lambda: self.stateTooltip.hide())
         self.down.lienInexistant.connect(self.youtube_interface.barr.slots_lien_In)
         self.down.erreur.connect(self.youtube_interface.barr.slots_lien_err)
         
@@ -193,7 +192,7 @@ class Main_Application(FluentWindow) :
                     id_user = self.user_info['id'],
                     **params,
                 )
-                send_fil.run()
+                send_fil.start()
 
                 send_fil.error.connect(self.champ_warning)
                 send_fil.connexion_code.connect(self.video_retranscribe_interface.precision.connexion_slots)
@@ -236,7 +235,6 @@ class Main_Application(FluentWindow) :
 
     def notification_number_clear(self, rootkey : str, number : int) :
         item = self.navigationInterface.widget(rootkey)
-        item.clicked.connect()        
 
     def notification_number(self, rootkey : str, number : int) :
         item = self.navigationInterface.widget(rootkey)
@@ -246,12 +244,13 @@ class Main_Application(FluentWindow) :
             target = item
         )
 
+    
+
 if __name__=="__main__" :
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app = QApplication(sys.argv)
     input = Main_Application({"id" : 3, "name" : "Joel", 'age' : 20, 'solde' : 189211.1212}, settings = QWidget())
-    input.set_settings(parameters_interface.parameters_interface("ui/Images/moi.png", "Joel", "https://beta.theb.ai/home", 21, 500, 800, "kappachikatsi@gmail.com", "Promotteur en chef du projet et Etudiant en licence 3 à l'université de Yaoundé 1"))
     input.show()
     app.exec()

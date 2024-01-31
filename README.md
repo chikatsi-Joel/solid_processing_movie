@@ -14,6 +14,7 @@ Cette application permet de :
 - visionner les vidéos ainsi que leurs retranscriptions
 - générer un fichier pdf ou srt concernant le contenu de la vidéo ou du timestamp de la vidéo
 
+
 ## Prérequis
 - Python 3.x
 - PyQt5

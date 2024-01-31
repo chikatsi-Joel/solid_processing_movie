@@ -10,8 +10,3 @@ class generate_file_logic(object) :
     def generate_file(self, generator_utils : abstract_generate | None = None) :
         generator_utils.generate_file(self.path)
 
-
-
-kwargs = {}
-genr = generate_file_logic()
-genr.generate_file(generate_srt(**kwargs))
