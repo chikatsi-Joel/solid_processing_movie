@@ -15,6 +15,7 @@ This application allows you to:
 
 ## Youtube Place Interface
 ![Image de visualisation de l'interface youtube](ui/Images/cap1.png)
+![Image de visualisation de l'interface youtube](ui/Images/cap2.png)
 ## Prérequis
 - Python 3.x
 - PyQt5
