@@ -14,7 +14,7 @@ This application allows you to:
 - Generate a PDF or SRT file regarding the content of the video or the video timestamp
 
 ## Youtube Place Interface
-![Image de visualisation de l'interface youtube](/home/chikatsi/Bureau/Application/ui/Images/cap1.png)
+![Image de visualisation de l'interface youtube](ui/Images/cap1.png)
 ## Prérequis
 - Python 3.x
 - PyQt5
