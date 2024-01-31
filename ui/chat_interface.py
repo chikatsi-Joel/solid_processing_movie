@@ -96,7 +96,6 @@ if __name__ == '__main__' :
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app = QApplication(sys.argv)
-    #win = Pres("Images/moi.png", "Presentation", "je suis un putain de programmeur")
     win = Message_Zone()
     win.show()
     app.exec()
