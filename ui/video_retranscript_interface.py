@@ -124,7 +124,7 @@ class Interface(QWidget) :
         self.setStyleSheet(open("ui/style/settings.qss", 'r').read())
 
     def get_srt_path(self) -> str:
-        return self.load_file.srt_path
+        return self.precision.srt_path
     
     def get_video_path(self) : 
         return self.load_file.path
