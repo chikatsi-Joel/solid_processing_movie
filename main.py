@@ -3,7 +3,6 @@ from ui import (
     video_extract_audio_interface,
     stream_video_interface,
     video_retranscript_interface,
-    help_interface,
     parameters_interface
 )
 from interface.download import DownLaod
@@ -41,7 +40,6 @@ class Main_Application(FluentWindow) :
 
         self.user_info = user_info
         self.settings = settings
-        self.help = help_interface.help_interface({})
 
         self.home = QWidget()
         self.video_interface = stream_video_interface.Video_Stream(parent = self)
@@ -54,7 +52,6 @@ class Main_Application(FluentWindow) :
         self.video_extract_audio.setObjectName('video_extract_audio')
         self.youtube_interface.setObjectName("youtube_interface")
         self.settings.setObjectName("settings")
-        self.help.setObjectName("help")
 
         self.addSubInterface(
             interface = self.youtube_interface,
@@ -95,13 +92,6 @@ class Main_Application(FluentWindow) :
             position = NavigationItemPosition.BOTTOM
         )
 
-        self.addSubInterface(
-            interface =  self.help,
-            icon = FIF.HELP,
-            text = 'Aide',
-            position = NavigationItemPosition.BOTTOM
-        )
-
         self.setWindowIcon(QIcon("ui/Images/logo.png"))
         self.titleBar
         self.setWindowTitle("Video Processing")
@@ -110,17 +100,8 @@ class Main_Application(FluentWindow) :
         self.youtube_interface.barr.send.clicked.connect(self.slots_youtube_down)
         self.youtube_interface.precision.video.valider.clicked.connect(self.slots_youtube_srt_generate)
         self.video_retranscribe_interface.precision.video.valider.clicked.connect(self.slots_srt_generate_video)
-        self.help.chat.zone_saisie.writable.send.clicked.connect(self.send_message_slots)
 
         self.setFixedSize(1250, 680)
-
-    """
-    Envoie des messages via le slot correspondant..
-    """
-    def send_message_slots(self) :
-        text = self.help.chat.zone_saisie.writable.toPlainText()
-        self.help.chat.zone_message.add_widget(text)
-        self.help.chat.zone_saisie.writable.clear()
 
 
     """
