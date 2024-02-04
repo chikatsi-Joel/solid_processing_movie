@@ -1,4 +1,4 @@
-import logique_metier.backbone.whisper_timestamped as whisper
+import whisper_timestamped as whisper
 from datetime import timedelta
 import random, string
 from logique_metier.backbone import audio
