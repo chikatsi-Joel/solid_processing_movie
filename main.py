@@ -147,6 +147,8 @@ class Main_Application(FluentWindow) :
 
             except AttributeError as e :
                 self.champ_warning("Not Video Found", "Aucune vidéo n'a été \n sélectionné. Veuillez allé dans un autre bloc..")
+            except Exception :
+                self.champ_warning("Erreur rencontré", "Vous devez être connecté a internet\n pour éffectuer la retranscription..")
         except ValueError as e :
             self.champ_warning("Precision Vide", f"La précision mérite \nune valeur...\n {str(e)}")
 
@@ -171,9 +173,30 @@ class Main_Application(FluentWindow) :
                 send_fil.error_connexion.connect(self.youtube_interface.precision.connexion_slots)
             except AttributeError as e :
                 self.champ_warning("Not video FOund", "Aucune vidéo n'a été \n sélectionné. Veuillez choisir la vidéo")
+            except Exception :
+                self.champ_warning("Erreur rencontré", "Vous devez être connecté a internet\n pour éffectuer la retranscription..")
         except ValueError as e :
             self.champ_warning("Precision Vide", f"La précision mérite \nune valeur...\n {str(e)}")
 
+    """
+    slot de visionnage immédiat
+    """
+
+    def slots_visionnage_immediat_yout(self) :
+        self.video_interface.path_srt = self.youtube_interface.get_url_srt()
+        self.video_interface.path_video = self.youtube_interface.get_url_video()
+        self.switchTo(self.video_interface)
+
+        self.video_interface.play_video_slots()
+
+    def slots_visionnage_immediat_video(self) :
+        self.video_interface.path_srt = self.video_retranscribe_interface.get_srt_path()
+        self.video_interface.path_video = self.video_retranscribe_interface.get_video_path()
+        self.switchTo(self.video_interface)
+
+        self.video_interface.play_video_slots()
+
+    
 
     def champ_warning(self, title : str, content : str) :
         InfoBar.warning(

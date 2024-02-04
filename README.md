@@ -33,5 +33,3 @@ This application allows you to:
 everything is listed in
 requirements.txt
 
-## Attention
-This project is open source and should not be used for commercial purposes.

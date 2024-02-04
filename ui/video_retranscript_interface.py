@@ -125,6 +125,9 @@ class Interface(QWidget) :
 
     def get_srt_path(self) -> str:
         return self.load_file.srt_path
+    
+    def get_video_path(self) : 
+        return self.load_file.path
 
 
 if __name__=="__main__" :

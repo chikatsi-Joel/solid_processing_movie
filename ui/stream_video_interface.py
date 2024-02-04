@@ -64,7 +64,7 @@ class Video_Stream(QWidget) :
         self.barr = Barre(self)
         h, h_2, h_subtit = QHBoxLayout(), QVBoxLayout(), QHBoxLayout()
         fr_sub = QFrame()
-        self.subtitle_label = TitleLabel("")
+        self.subtitle_label = StrongBodyLabel("")
         h_subtit.addWidget(self.subtitle_label, 0, Qt.AlignmentFlag.AlignCenter)
         fr, fr_2 = QFrame(), QFrame()
         fr_sub.setLayout(h_subtit)
@@ -80,6 +80,8 @@ class Video_Stream(QWidget) :
         self.subtitle_label.setFont(font :=QFont('KacstTitleL'))
         font.setBold(True)
 
+        self.media.setFixedHeight(500)
+        self.subtitle_label.setFixedHeight(40)
         self.path_video, self.path_srt = "", ""
         self.barr.srt.select.clicked.connect(self.select_slots_srt)
         self.barr.vid.select.clicked.connect(self.select_slots)
@@ -190,6 +192,12 @@ class Video_Stream(QWidget) :
             )
             self.subtitles = SubRipFile.open(self.path_srt)
             self.current_subtitle_index = None
+
+    def play_video_slots(self) :
+        self.mediaPlayer.setMedia(
+                    QMediaContent(QUrl.fromLocalFile(self.path_video)))
+        self.mediaPlayer.play()
+        self.subtitles = SubRipFile.open(self.path_srt)
         
         
 if __name__=='__main__' :
