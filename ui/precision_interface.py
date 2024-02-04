@@ -169,8 +169,8 @@ class  Interface(QWidget) :
             "horo_name" : self.video.name.text().strip(),
             "path_srt" : self.video.path_srt,
             "type" : self.video.typ.currentText(),
-            "lang_dep" : self.video.lang_dep.currentText(),
-            "lang_cible" : self.video.lang_cible.currentText(),
+            "language_src" : self.video.lang_dep.currentText(),
+            "language_dep" : self.video.lang_cible.currentText(),
             "precision" : int(self.video.precision.text())
         }
 

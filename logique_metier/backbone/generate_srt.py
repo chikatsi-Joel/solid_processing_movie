@@ -5,11 +5,11 @@ from PyQt5.QtCore import *
 
 
 class generate_file(QThread) :
-    error_connexion = pyqtSignal()
-    end_generate = pyqtSignal(str)
+    error_connexion = pyqtSignal(str, str)
+    end_generate = pyqtSignal(str, str)
     def __init__(
         self,
-        video_path : str,
+        file_path : str,
         language_src : str,
         language_dest : str,
         type : str,
@@ -17,7 +17,7 @@ class generate_file(QThread) :
         path_srt : str
     ) :
         super(generate_file, self).__init__()
-        self.videeo_path = video_path
+        self.videeo_path = file_path
         self.lang_dest = language_dest
         self.lang_src = language_src
         self.type = type
@@ -33,4 +33,4 @@ class generate_file(QThread) :
                 horo_name = self.horo_name,
                 path_srt = self.path_srt
             )
-        self.end_generate.emit(path_srt)
+        self.end_generate.emit("Téléchargement Terminé", f"Path du srt : {path_srt}")

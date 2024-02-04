@@ -159,8 +159,9 @@ class Main_Application(FluentWindow) :
                     **params,
                 )
                 send_fil.start()
-
+                self.champ_info("Infos", "Retranscription Lancé")
                 send_fil.error_connexion.connect(self.youtube_interface.precision.connexion_slots)
+
             except AttributeError as e :
                 self.champ_warning("Not Video Found", "Aucune vidéo n'a été \n sélectionné. Veuillez allé dans un autre bloc..")
         except ValueError as e :
@@ -183,6 +184,8 @@ class Main_Application(FluentWindow) :
                 send_fil.start()
 
                 send_fil.error_connexion.connect(self.champ_warning)
+                self.champ_info("Infos", "Retranscription Lancé")
+                send_fil.error_connexion.connect(self.youtube_interface.precision.connexion_slots)
             except AttributeError as e :
                 self.champ_warning("Not video FOund", "Aucune vidéo n'a été \n sélectionné. Veuillez choisir la vidéo")
         except ValueError as e :
