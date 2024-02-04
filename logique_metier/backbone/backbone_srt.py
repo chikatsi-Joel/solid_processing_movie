@@ -1,4 +1,4 @@
-import whisper_timestamped as whisper
+import logique_metier.backbone.whisper_timestamped as whisper
 from datetime import timedelta
 import random, string
 from logique_metier.backbone import audio
@@ -23,9 +23,8 @@ def transcribe_audio(video_path : str,  language_src : str, language_dest : str,
     audio_name = generate_name(8)
     audio_path = audio.extract_audio(video_path, audio_name, 'wav')
     model = whisper.load_model(type)
-    transcribe = whisper.transcribe(model, audio_path, language= language_src)
+    transcribe = whisper.transcribe(model, audio_path, language= get_name_gen(language_src.lower()))
     segments = transcribe['segments']
-    
     texte = ""
     for segment in segments:
         startTime = str(0)+str(timedelta(seconds=int(segment['start'])))+',000'
