@@ -5,6 +5,8 @@ from ui import (
     video_retranscript_interface,
     parameters_interface
 )
+
+
 from interface.download import DownLaod
 from interface.decorator import decorator
 from logique_metier.backbone.generate_srt import generate_file
@@ -101,7 +103,7 @@ class Main_Application(FluentWindow) :
         self.youtube_interface.precision.video.valider.clicked.connect(self.slots_youtube_srt_generate)
         self.video_retranscribe_interface.precision.video.valider.clicked.connect(self.slots_srt_generate_video)
 
-        self.setFixedSize(1250, 680)
+        self.setFixedSize(1250, 676)
 
 
     """
