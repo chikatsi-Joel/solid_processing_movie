@@ -13,6 +13,13 @@ This application allows you to:
 - View videos along with their transcriptions
 - Generate a PDF or SRT file regarding the content of the video or the video timestamp
 
+## Installation
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/chikatsi-Joel/solid_processing_movie.git
+
+
 ## Youtube Place Interface
 ![Youtube Place Interface](ui/Images/cap1.png)
 ## Retranscription video Place
@@ -25,9 +32,3 @@ This application allows you to:
 ...
 everything is listed in
 requirements.txt
-
-## Installation
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/chikatsi-Joel/solid_processing_movie.git

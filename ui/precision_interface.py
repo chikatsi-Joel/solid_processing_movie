@@ -113,7 +113,7 @@ class Precision(HeaderCardWidget) :
     def beta_mode(self) :
         InfoBar.info(
             "Mode Payant",
-            content = "La précision que vous avez \nsélectionnez est payante car, elle \nnécessite une grande puissance de \ncalcul",
+            content = "La précision que vous avez \nsélectionnez nécessite une grande puissance de \ncalcul",
             isClosable = True,
             orient = Qt.Orientation.Horizontal,
             position= InfoBarPosition.TOP_RIGHT,
