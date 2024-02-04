@@ -36,7 +36,7 @@ def transcribe_audio(video_path : str,  language_src : str, language_dest : str,
     generate = audio.vague(texte)
     res = ""
     for portion in generate :
-        trans = audio.translate_with_language(portion, language_dest = language_dest, language_src = language_src)
+        trans = audio.translate_with_language(portion, language_dest = get_name_gen(language_dest.lower()), language_src = get_name_gen(language_src.lower()))
         res += trans
         
     url = f'{path_srt}/{horo_name}.srt'
