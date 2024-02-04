@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
 
+
 class generate_file(QThread) :
     error_connexion = pyqtSignal()
     end_generate = pyqtSignal(str)
@@ -24,8 +25,7 @@ class generate_file(QThread) :
         self.path_srt = path_srt
 
     def run(self) :
-        try :
-            path_srt = backbone_srt.transcribe_audio(
+        path_srt = backbone_srt.transcribe_audio(
                 video_path = self.videeo_path,
                 language_dest = self.lang_dest,
                 language_src = self.lang_src,
@@ -33,6 +33,4 @@ class generate_file(QThread) :
                 horo_name = self.horo_name,
                 path_srt = self.path_srt
             )
-            self.end_generate.emit(path_srt)
-        except ConnectionError :
-            pass
+        self.end_generate.emit(path_srt)

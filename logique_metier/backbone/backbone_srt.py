@@ -3,6 +3,18 @@ from datetime import timedelta
 import random, string
 import audio
 
+def get_name_gen(type_ : str) :
+    lang = {
+            'anglais' : 'en',
+            'français' : 'fr',
+            'russe' : 'ru',
+            'protugais' : 'pt',
+            'allemand' : 'de',
+            'italien' : 'it',
+            'japonais' : 'ja',
+            'chinois' : 'zh'
+    }
+    return lang[type_]
 
 def generate_name(number : int) :
     return ''.join([string.ascii_letters[random.randint(0, 10)]+str(random.randint(0, 5)) for _ in range(number)])
@@ -38,7 +50,7 @@ def traduct_srt(srt_path : str, lang_src : str, lang_dest : str) :
     generate = audio.vague(data)
     res = ""
     for portion in generate :
-        trans = audio.translate_with_language(portion, language_dest = lang_dest, language_src = lang_src)
+        trans = audio.translate_with_language(portion, language_dest = get_name_gen(lang_dest), language_src = get_name_gen(lang_src))
         res += trans
     src_path = srt_path.split('/')[-1].split('.')[0]
     with open(f'Transcribe/{src_path}_{lang_dest}.srt', 'w', encoding='utf-8') as srtFile:

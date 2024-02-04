@@ -9,7 +9,6 @@ class Setup :
         "wav"
     ]
     lang = {
-            'auto' : None,
             'anglais' : 'en',
             'français' : 'fr',
             'russe' : 'ru',
