@@ -7,6 +7,7 @@ from PyQt5.QtCore import *
 class generate_file(QThread) :
     error_connexion = pyqtSignal(str, str)
     end_generate = pyqtSignal(str, str)
+    path_srt = pyqtSignal(str)
     def __init__(
         self,
         file_path : str,
@@ -34,3 +35,4 @@ class generate_file(QThread) :
                 path_srt = self.path_srt
             )
         self.end_generate.emit("Retranscription Terminé😎", f"Path du srt : {path_srt}")
+        self.path_srt.emit(path_srt)
