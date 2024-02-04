@@ -11,14 +11,14 @@ class generate_file(QThread) :
         self,
         file_path : str,
         language_src : str,
-        language_dest : str,
+        language_dep : str,
         type : str,
         horo_name : str,
         path_srt : str
     ) :
         super(generate_file, self).__init__()
         self.videeo_path = file_path
-        self.lang_dest = language_dest
+        self.lang_dest = language_dep
         self.lang_src = language_src
         self.type = type
         self.horo_name = horo_name
