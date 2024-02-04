@@ -187,7 +187,7 @@ class Main_Application(FluentWindow) :
     """
 
     def slots_visionnage_immediat_yout(self) :
-        self.video_interface.path_srt = self.youtube_interface.get_url_srt()
+        self.video_interface.path_srt = self.youtube_interface.precision.srt_path
         if self.video_interface.path_srt == "" :
             self.champ_warning("selecionnez le SRT", "Aucun fichier srt n'a été sélectionné")
             return         
@@ -200,7 +200,7 @@ class Main_Application(FluentWindow) :
         self.video_interface.play_video_slots()
 
     def slots_visionnage_immediat_video(self) :
-        self.video_interface.path_srt = self.video_retranscribe_interface.get_srt_path()
+        self.video_interface.path_srt = self.video_retranscribe_interface.precision.srt_path
         if self.video_interface.path_srt == "" :
             self.champ_warning("selecionnez le SRT", "Aucun fichier srt n'a été sélectionné")
             return 
