@@ -23,7 +23,7 @@ class generate_file(QThread) :
         self.type = type
         self.horo_name = horo_name
         self.path_srt = path_srt
-
+        
     def run(self) :
         path_srt = backbone_srt.transcribe_audio(
                 video_path = self.videeo_path,
