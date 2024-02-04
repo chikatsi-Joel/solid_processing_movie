@@ -184,7 +184,7 @@ class Interface(QWidget) :
 
         
     def get_url_video(self ) -> str:
-        if self.barr.path_video_download.strip() == "" :
+        if self.barr.path_video_download == "" :
             raise AttributeError("Selectionner le dossier de destination.")
         return self.barr.path_video_download
     
