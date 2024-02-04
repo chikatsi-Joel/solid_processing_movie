@@ -102,7 +102,8 @@ class Main_Application(FluentWindow) :
         self.youtube_interface.barr.send.clicked.connect(self.slots_youtube_down)
         self.youtube_interface.precision.video.valider.clicked.connect(self.slots_youtube_srt_generate)
         self.video_retranscribe_interface.precision.video.valider.clicked.connect(self.slots_srt_generate_video)
-
+        self.youtube_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_yout)
+        self.video_retranscribe_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_yout)
         self.setFixedSize(1250, 676)
 
 
