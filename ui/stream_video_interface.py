@@ -198,6 +198,7 @@ class Video_Stream(QWidget) :
                     QMediaContent(QUrl.fromLocalFile(self.path_video)))
         self.mediaPlayer.play()
         self.subtitles = SubRipFile.open(self.path_srt)
+        self.current_subtitle_index = None
         
         
 if __name__=='__main__' :
