@@ -33,4 +33,4 @@ class generate_file(QThread) :
                 horo_name = self.horo_name,
                 path_srt = self.path_srt
             )
-        self.end_generate.emit("Téléchargement Terminé", f"Path du srt : {path_srt}")
+        self.end_generate.emit("Retranscription Terminé😎", f"Path du srt : {path_srt}")
