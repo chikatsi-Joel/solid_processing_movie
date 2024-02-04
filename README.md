@@ -13,6 +13,9 @@ This application allows you to:
 - View videos along with their transcriptions
 - Generate a PDF or SRT file regarding the content of the video or the video timestamp
 
+## How to use
+To watch a video with its transcription, you need to import the file in srt format and load it before being able to view. When transcribing directly from the application, you can switch directly to viewing mode.
+
 ## Installation
 
 1. Clone this repository:
