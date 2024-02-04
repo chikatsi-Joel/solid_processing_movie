@@ -8,8 +8,7 @@ from ui import (
 )
 from interface.download import DownLaod
 from interface.decorator import decorator
-from logique_metier.server.backbone import send_file
-from logique_metier.server import server
+from logique_metier.backbone.generate_srt import generate_file
 from logique_metier.generate.download_file import download_on_youtube
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -43,7 +42,6 @@ class Main_Application(FluentWindow) :
         self.user_info = user_info
         self.settings = settings
         self.help = help_interface.help_interface({})
-        self.server = server.requester("", 5000)
 
         self.home = QWidget()
         self.video_interface = stream_video_interface.Video_Stream(parent = self)
@@ -157,23 +155,14 @@ class Main_Application(FluentWindow) :
             try :
                 url_video = self.youtube_interface.get_url_video()
                 params.update({"file_path" : url_video})
-                send_fil = send_file.send_file_thread(
-                    server = self.server,
-                    endpoint_file = 'video',
-                    id_user = self.user_info['id'],
+                send_fil = generate_file(
                     **params,
                 )
                 send_fil.start()
 
-                send_fil.connexion_code.connect(self.youtube_interface.precision.connexion_slots)
-                send_fil.status_video_code.connect(self.youtube_interface.precision.status_video_slots)
-                send_fil.status_srt_code.connect(self.youtube_interface.precision.status_slots)
+                send_fil.error_connexion.connect(self.youtube_interface.precision.connexion_slots)
             except AttributeError as e :
                 self.champ_warning("Not Video Found", "Aucune vidéo n'a été \n sélectionné. Veuillez allé dans un autre bloc..")
-            except InvalidSchema as e :
-                self.champ_warning("Erreur de connexion", "Host et Port non défini..\nVous n'êtes pas connecté au serveur.")
-            except InterruptedError as e:
-                self.champ_warning("Erreur de connexion", "Connexion NOn établie..")
         except ValueError as e :
             self.champ_warning("Precision Vide", f"La précision mérite \nune valeur...\n {str(e)}")
 
@@ -188,25 +177,14 @@ class Main_Application(FluentWindow) :
             try :
                 url_video = self.video_retranscribe_interface.load_file.get_params()
                 params.update(url_video)
-                send_fil = send_file.send_file_thread(
-                    server = self.server,
-                    endpoint_file = 'video',
-                    id_user = self.user_info['id'],
+                send_fil = generate_file(
                     **params,
                 )
                 send_fil.start()
 
-                send_fil.error.connect(self.champ_warning)
-                send_fil.connexion_code.connect(self.video_retranscribe_interface.precision.connexion_slots)
-                send_fil.status_video_code.connect(self.video_retranscribe_interface.precision.status_video_slots)
-                send_fil.status_srt_code.connect(self.video_retranscribe_interface.precision.status_slots)
+                send_fil.error_connexion.connect(self.champ_warning)
             except AttributeError as e :
                 self.champ_warning("Not video FOund", "Aucune vidéo n'a été \n sélectionné. Veuillez choisir la vidéo")
-
-            except InvalidSchema as e :
-                self.champ_warning("Erreur de connexion", "Host et Port non défini..\nVous n'êtes pas connecté au serveur.")
-            except InterruptedError as e:
-                self.champ_warning("Erreur de connexion", "Connexion NOn établie..")
         except ValueError as e :
             self.champ_warning("Precision Vide", f"La précision mérite \nune valeur...\n {str(e)}")
 

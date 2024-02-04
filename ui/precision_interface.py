@@ -166,7 +166,7 @@ class  Interface(QWidget) :
 
     def get_params(self) :
         return {
-            "name" : self.video.name.text().strip(),
+            "horo_name" : self.video.name.text().strip(),
             "path_srt" : self.video.path_srt,
             "type" : self.video.typ.currentText(),
             "lang_dep" : self.video.lang_dep.currentText(),
