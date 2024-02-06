@@ -1,6 +1,6 @@
 
-from abstract_logic.abstract_generate import abstract_generate
-from logique_metier.generate import generate_srt
+from .abstract_logic.abstract_generate import abstract_generate
+from .generate import generate_srt
 
 
 class generate_file_logic(object) :

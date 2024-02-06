@@ -1,4 +1,4 @@
-from logique_metier.backbone import backbone_srt
+from ..backbone import backbone_srt
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 

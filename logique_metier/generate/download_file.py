@@ -1,4 +1,4 @@
-from logique_metier.abstract_logic.abstract_download import abstract_download
+from ..abstract_logic.abstract_download import abstract_download
 from pytube import YouTube
 
 

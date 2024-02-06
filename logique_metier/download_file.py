@@ -1,5 +1,6 @@
 
-from logique_metier.abstract_logic.abstract_download import abstract_download
+from .abstract_logic.abstract_download import abstract_download
+
 
 class download_file_logic(object) :
     

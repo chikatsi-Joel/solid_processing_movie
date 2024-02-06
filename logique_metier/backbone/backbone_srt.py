@@ -1,7 +1,7 @@
-import whisper_timestamped as whisper
+from .whisper_timestamped import whisper_timestamped as whisper
 from datetime import timedelta
 import random, string
-from logique_metier.backbone import audio
+from ..backbone import audio
 
 def get_name_gen(type_ : str) :
     lang = {
