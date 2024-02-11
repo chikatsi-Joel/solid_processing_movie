@@ -37,11 +37,11 @@ class Main_Application(FluentWindow) :
     
     @__init__.register(dict)
     @__init__.register(QWidget)
-    def _(self, user_info : dict[str, str | int | float], settings : QWidget) :
+    def _(self, user_info : dict[str, str | int | float]) :
         super(Main_Application, self).__init__()
 
         self.user_info = user_info
-        self.settings = settings
+        self.settings = parameters_interface.parameters_interface()
 
         self.home = QWidget()
         self.video_interface = stream_video_interface.Video_Stream(parent = self)
@@ -260,6 +260,6 @@ if __name__=="__main__" :
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)  
     app = QApplication(sys.argv)
-    input = Main_Application({"id" : 3, "name" : "Joel", 'age' : 20, 'solde' : 189211.1212}, settings = QWidget())
+    input = Main_Application({"id" : 3, "name" : "Joel", 'age' : 20, 'solde' : 189211.1212})
     input.show()
     app.exec()

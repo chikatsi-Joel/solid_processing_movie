@@ -1,4 +1,4 @@
-from .whisper_timestamped import whisper_timestamped as whisper
+from whisper_timestamped import whisper_timestamped as whisper
 from datetime import timedelta
 import random, string
 from ..backbone import audio

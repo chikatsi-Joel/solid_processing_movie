@@ -140,27 +140,17 @@ class Profile(SmoothScrollArea) :
 
 class parameters_interface(QWidget) :
     def __init__(
-        self,
-        path_image : str,
-        name : str,
-        path_git : str,
-        age: int,
-        nbre_video : int,
-        compte : float,
-        mail : str,
-        descript : str
+        self
     ) :
         super(parameters_interface, self).__init__()
         self.vbox = QHBoxLayout(self)
-        self.prof = Profile(path_image=path_image,  name=name, path_git = path_git, age= age, tokens = compte, nbre_video = nbre_video, mail = mail, descript= descript)
-        self.prof.setScrollAnimation(Qt.Horizontal, duration = 2000)
-        self.vbox.addSpacing(100), self.vbox.addWidget(self.prof)
-        with open(f'ui/style/settings.qss', encoding='utf-8') as f:
-            self.setStyleSheet(f.read())
-        
-    def update_tokens(self, value : float) :
-        pass
-    
+        self.prof = HyperlinkCard(
+            "https://github.com/chikatsi-Joel/solid_processing_movie.git",
+            "lien git du projet", FIF.GITHUB, "Chikatsi Joel", "Nom du développeur : Chikatsi Joel\nEmail : kappachikatsi@gmail.com")
+
+        #self.vbox.addSpacerItem(QSpacerItem(200, 200))
+        self.vbox.addWidget(self.prof, 0, Qt.AlignmentFlag.AlignCenter)
+        #self.vbox.addSpacerItem(QSpacerItem(200, 200))
     
 if __name__=='__main__' :
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
