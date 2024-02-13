@@ -188,8 +188,6 @@ class Interface(QWidget) :
             raise AttributeError("Selectionner le dossier de destination.")
         return self.barr.path_video_download
     
-    def get_url_srt(self) -> str:
-        return self.precision.srt_path
 
 
 if __name__=="__main__" :

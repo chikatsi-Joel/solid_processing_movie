@@ -55,6 +55,11 @@ class Main_Application(FluentWindow) :
         self.youtube_interface.setObjectName("youtube_interface")
         self.settings.setObjectName("settings")
 
+        """
+        outils configuration visionnage
+        """
+        self.path_srt = ""
+        self.path_video = ""
         self.addSubInterface(
             interface = self.youtube_interface,
             icon = "ui/Images/you.png",
@@ -103,7 +108,7 @@ class Main_Application(FluentWindow) :
         self.youtube_interface.precision.video.valider.clicked.connect(self.slots_youtube_srt_generate)
         self.video_retranscribe_interface.precision.video.valider.clicked.connect(self.slots_srt_generate_video)
         self.youtube_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_yout)
-        self.video_retranscribe_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_yout)
+        self.video_retranscribe_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_video)
         self.setFixedSize(1250, 676)
 
 
@@ -123,7 +128,7 @@ class Main_Application(FluentWindow) :
         self.stateTooltip = StateToolTip('Patientez un instant', 'Votre téléchargement est en cours.\nPatientez svp...', self)
         self.stateTooltip.show()
 
-        self.down.endDownload.connect(self.youtube_interface.barr.endDown)
+        self.down.endDownload.connect(self.set_video_path)
         self.down.endDownload.connect(lambda: self.stateTooltip.hide())
         self.down.lienInexistant.connect(self.youtube_interface.barr.slots_lien_In)
         self.down.erreur.connect(self.youtube_interface.barr.slots_lien_err)
@@ -144,7 +149,9 @@ class Main_Application(FluentWindow) :
                 )
                 send_fil.start()
                 self.champ_info("Infos", "Retranscription Lancé")
-                send_fil.path_srt_emit.connect(self.give_yout)
+                self.stateTooltip = StateToolTip('Patientez un instant', 'Votre Retranscription est en cours.\nPatientez svp...', self)
+                self.stateTooltip.show()
+                send_fil.path_srt_emit.connect(self.set_path_srt)
                 send_fil.end_generate.connect(self.champ_success)
                 send_fil.error_connexion.connect(self.youtube_interface.precision.connexion_slots)
 
@@ -173,7 +180,9 @@ class Main_Application(FluentWindow) :
                 send_fil.start()
                 send_fil.error_connexion.connect(self.champ_warning)
                 self.champ_info("Infos", "Retranscription Lancé")
-                send_fil.path_srt_emit.connect(self.give_vid)
+                self.stateTooltip = StateToolTip('Patientez un instant', 'Votre Retranscription est en cours.\nPatientez svp...', self)
+                self.stateTooltip.show()
+                send_fil.path_srt_emit.connect(self.set_path_srt)
                 send_fil.end_generate.connect(self.champ_success)
             except AttributeError as e :
                 self.champ_warning("Not video FOund", "Aucune vidéo n'a été \n sélectionné. Veuillez choisir la vidéo")
@@ -187,7 +196,6 @@ class Main_Application(FluentWindow) :
     """
 
     def slots_visionnage_immediat_yout(self) :
-        self.video_interface.path_srt = self.youtube_interface.precision.srt_path
         if self.video_interface.path_srt == "" :
             self.champ_warning("selecionnez le SRT", "Aucun fichier srt n'a été sélectionné")
             return         
@@ -195,21 +203,22 @@ class Main_Application(FluentWindow) :
             self.video_interface.path_video = self.youtube_interface.get_url_video()
         except AttributeError :
             self.champ_warning("Selectionnez la video", "Aucune video n'est sélectionné")
+            return
         self.switchTo(self.video_interface)
 
         self.video_interface.play_video_slots()
 
     def slots_visionnage_immediat_video(self) :
-        self.video_interface.path_srt = self.video_retranscribe_interface.precision.srt_path
-        if self.video_interface.path_srt == "" :
+        self.path_video = self.video_retranscribe_interface.get_video_path()
+        if self.path_srt == "" :
             self.champ_warning("selecionnez le SRT", "Aucun fichier srt n'a été sélectionné")
             return 
-        self.video_interface.path_video = self.video_retranscribe_interface.get_video_path()
-        if self.video_interface.path_video == "" :
+        if self.path_video == "" :
             self.champ_warning("selecionnez la Video", "Aucune vidéo n'a été sélectionné")
             return 
         self.switchTo(self.video_interface)
-
+        self.video_interface.path_srt = self.path_srt
+        self.video_interface.path_video = self.path_video
         self.video_interface.play_video_slots()
 
     
@@ -249,11 +258,12 @@ class Main_Application(FluentWindow) :
             target = item
         )
 
-    def give_yout(self, path : str) :
-        self.youtube_interface.precision.video.path_srt = path
+    def set_video_path(self, path : str) :
+        self.path_video = path
 
-    def give_vid(self, path : str) :
-        self.video_retranscribe_interface.precision.video.path_srt = path
+    def set_path_srt(self, path : str) :
+        self.stateTooltip.hide()
+        self.path_srt = path
 
 if __name__=="__main__" :
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)

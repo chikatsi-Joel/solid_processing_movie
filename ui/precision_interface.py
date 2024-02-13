@@ -40,7 +40,6 @@ class Precision(HeaderCardWidget) :
         self.montant_tarifaire = BodyLabel("")
         self.montant = TitleLabel("")
         b = QHBoxLayout()
-        self.path_srt = ""
         self.sep = CardSeparator(self)
         self.srt_but = PushButton(text = "choose srt path", icon = FIF.FOLDER_ADD)
         self.typ.addItems(["SRT", "PDF"])
@@ -230,6 +229,7 @@ class  Interface(QWidget) :
                 position = InfoBarPosition.TOP_RIGHT,
                 parent = self.par
             )
+
 if __name__=='__main__' :
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
