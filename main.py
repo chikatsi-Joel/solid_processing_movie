@@ -5,7 +5,7 @@ from ui import (
     video_retranscript_interface,
     parameters_interface
 )
-
+import httpcore
 
 from interface.download import DownLaod
 from interface.decorator import decorator
@@ -107,7 +107,7 @@ class Main_Application(FluentWindow) :
         self.youtube_interface.barr.send.clicked.connect(self.slots_youtube_down)
         self.youtube_interface.precision.video.valider.clicked.connect(self.slots_youtube_srt_generate)
         self.video_retranscribe_interface.precision.video.valider.clicked.connect(self.slots_srt_generate_video)
-        self.youtube_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_yout)
+        self.youtube_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_video)
         self.video_retranscribe_interface.precision.video.visionner.clicked.connect(self.slots_visionnage_immediat_video)
         self.setFixedSize(1250, 676)
 
@@ -122,14 +122,17 @@ class Main_Application(FluentWindow) :
             "url_destination" : self.youtube_interface.barr.path_folder,
             "file_name" : self.youtube_interface.barr.edit_nom_video.text().strip(),
         }
-        self.down = DownLaod(download_on_youtube(**params))
-        self.down.start()
 
         self.stateTooltip = StateToolTip('Patientez un instant', 'Votre téléchargement est en cours.\nPatientez svp...', self)
-        self.stateTooltip.show()
+
+        self.down = DownLaod(download_on_youtube(**params), self.stateTooltip)
+        self.down.start()
 
         self.down.endDownload.connect(self.set_video_path)
         self.down.endDownload.connect(lambda: self.stateTooltip.hide())
+        self.down.lienInexistant.connect(lambda: self.stateTooltip.hide())
+        self.down.erreur.connect(lambda: self.stateTooltip.hide())
+        self.down.endDownload.connect(lambda x : self.champ_success("Téléchargement terminé", f"Votre téléchargement a été\n éffectué avec succès..\nLocation : {x}"))
         self.down.lienInexistant.connect(self.youtube_interface.barr.slots_lien_In)
         self.down.erreur.connect(self.youtube_interface.barr.slots_lien_err)
         
@@ -139,11 +142,13 @@ class Main_Application(FluentWindow) :
     """
     @decorator.precision_verification
     def slots_youtube_srt_generate(self) :
+        if self.path_video == "" :
+            self.champ_warning("Vidéo non téléchargé.", "Cette opération nécessite de télécharger\n Une vidéo sur Youtube..")
+            return
         try :
             params = self.youtube_interface.precision.get_params()
+            params.update({"file_path" : self.path_video})
             try :
-                url_video = self.youtube_interface.get_url_video()
-                params.update({"file_path" : url_video})
                 send_fil = generate_file(
                     **params,
                 )
@@ -154,11 +159,8 @@ class Main_Application(FluentWindow) :
                 send_fil.path_srt_emit.connect(self.set_path_srt)
                 send_fil.end_generate.connect(self.champ_success)
                 send_fil.error_connexion.connect(self.youtube_interface.precision.connexion_slots)
-
             except AttributeError as e :
                 self.champ_warning("Not Video Found", "Aucune vidéo n'a été \n sélectionné. Veuillez allé dans un autre bloc..")
-            except Exception :
-                self.champ_warning("Erreur rencontré", "Vous devez être connecté a internet\n pour éffectuer la retranscription..")
         except ValueError as e :
             self.champ_warning("Precision Vide", f"La précision mérite \nune valeur...\n {str(e)}")
 
@@ -186,30 +188,17 @@ class Main_Application(FluentWindow) :
                 send_fil.end_generate.connect(self.champ_success)
             except AttributeError as e :
                 self.champ_warning("Not video FOund", "Aucune vidéo n'a été \n sélectionné. Veuillez choisir la vidéo")
-            except Exception :
-                self.champ_warning("Erreur rencontré", "Vous devez être connecté a internet\n pour éffectuer la retranscription..")
+            except httpcore._exceptions.ConnectError as e :
+                self.champ_warning("Erreur rencontré", "Vous devez être connecté a internet\n pour éffectuer la retranscription..")                
         except ValueError as e :
             self.champ_warning("Precision Vide", f"La précision mérite \nune valeur...\n {str(e)}")
 
     """
-    slot de visionnage immédiat
+    slot de visionnage de vidéo avec srt en mode bascule immédiat
     """
-
-    def slots_visionnage_immediat_yout(self) :
-        if self.video_interface.path_srt == "" :
-            self.champ_warning("selecionnez le SRT", "Aucun fichier srt n'a été sélectionné")
-            return         
-        try :
-            self.video_interface.path_video = self.youtube_interface.get_url_video()
-        except AttributeError :
-            self.champ_warning("Selectionnez la video", "Aucune video n'est sélectionné")
-            return
-        self.switchTo(self.video_interface)
-
-        self.video_interface.play_video_slots()
-
     def slots_visionnage_immediat_video(self) :
-        self.path_video = self.video_retranscribe_interface.get_video_path()
+        if self.path_video.strip() == "" :
+            self.path_video = self.video_retranscribe_interface.get_video_path() 
         if self.path_srt == "" :
             self.champ_warning("selecionnez le SRT", "Aucun fichier srt n'a été sélectionné")
             return 

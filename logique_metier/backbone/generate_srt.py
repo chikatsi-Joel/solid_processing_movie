@@ -14,6 +14,7 @@ class generate_file(QThread) :
         language_src : str,
         language_dep : str,
         type : str,
+        pdf_or_srt : str,
         horo_name : str,
         path_srt : str
     ) :
@@ -24,12 +25,14 @@ class generate_file(QThread) :
         self.type = type
         self.horo_name = horo_name
         self.path_srt = path_srt
+        self._pdf_or_srt = pdf_or_srt
         
     def run(self) :
         path_srt = backbone_srt.transcribe_audio(
                 video_path = self.videeo_path,
                 language_dest = self.lang_dest,
                 language_src = self.lang_src,
+                pdf_or_srt = self._pdf_or_srt,
                 type = self.type,
                 horo_name = self.horo_name,
                 path_srt = self.path_srt

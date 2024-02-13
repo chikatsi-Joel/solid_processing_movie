@@ -52,19 +52,18 @@ class Load_file(HeaderCardWidget) :
         self.tit = SubtitleLabel("File")
         self.tit_path = SubtitleLabel("Choisir l'emplacement du SRT  : ")
         self.butt = PushButton("Select", self, FIF.FOLDER_ADD)
-        self.empla = PushButton("Select", self, FIF.FOLDER_ADD)
         self.sep = HorizontalSeparator()
+
         h = QGridLayout()
         self.vbox = QVBoxLayout()
         self.item, self.path = None, ""
         self.srt_path = ""
         h.addWidget(self.tit, 0, 0),h.addWidget(self.butt, 0, 1)
-        h.addWidget(self.tit_path, 1, 0), h.addWidget(self.empla, 1, 1)
-        self.vbox.addLayout(h), self.vbox.addWidget(self.sep)
+        self.vbox.addLayout(h)
+        self.vbox.addWidget(self.sep)
         
         self.viewLayout.addLayout(self.vbox)
         self.butt.clicked.connect(self.slots_con)
-        self.empla.clicked.connect(self.slots_path)
         self.setFixedWidth(500)
 
     def slots_con(self) :
@@ -78,17 +77,7 @@ class Load_file(HeaderCardWidget) :
             path = Path(filename)
             self.path = str(path)
             self.addFolder(self.path)
-        
-    def slots_path(self) :
-        filename = QFileDialog.getExistingDirectory(
-        self,
-            "Selectionnez un Dossier",
-            "/home/",
-        )
-        if filename:
-            path = Path(filename)
-            self.srt_path = str(path)
-            print(self.srt_path)
+
         
     def addFolder(self, path : str) :
         self.item = Item(path, self)

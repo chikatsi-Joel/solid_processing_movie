@@ -1,45 +1,20 @@
 from ..abstract_logic import abstract_generate
 from ..backbone import backbone_srt
+from .convert_pdf import convertir
 
 class generate_srt(abstract_generate) :
-    def __init__(
-        self, 
-        file_path : str,
-        horo_name : str,
-        lang_dep : str,
-        lang_src : str,
-        type : str,
-    ) :
-        
-        self.video_path = file_path
-        self.horo_name = horo_name
-        self.lang_dep = lang_dep
-        self.lang_src = lang_src
-        self.type = type
-
-    def generate_file(file_path : str) :
-        return backbone_srt.transcribe_audio(
-            generate_srt.__dict__
-        )
+    @staticmethod
+    def generate_file(file_path : str, text : str) :
+        open(file_path, "r").write(text)
+        return file_path
     
 
 class generate_pdf(abstract_generate) :
-    def __init__(
-        self,
-        file_path : str,
-        format : str,
-        lang_dep : str,
-        lang_src : str,
-        type : str
-    ) :
-
-        self.file_path = file_path
-        self.format = format
-        self.lang_dep = lang_dep
-        self.lang_src = lang_src
-        self.type = type
-
-    def generate_file(file_path : str) :
-        print(generate_pdf.__dict__)
+    def __init__(self, pdf_path : str) :
+        self.pdf_path = pdf_path
+    @staticmethod
+    def generate_file(file_path : str, texte : str) :
+        generate_srt.generate_file(file_path, texte)
+        convertir.convert_srt_en_pdf()
 
 

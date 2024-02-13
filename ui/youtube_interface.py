@@ -110,7 +110,7 @@ class Input_Data(HeaderCardWidget) :
     def slots_lien_err(self, erreur : str) :
         InfoBar.warning(
                 "Une Erreur c'est produite.",
-                f"Une erreur interne c'est produite./nSuite à une erreur  {erreur}",
+                f"Vérifiez votre connexion à internet\n Code error:   {erreur}",
                 duration = 6000,
                 parent = self.par
         )
@@ -123,7 +123,7 @@ class Input_Data(HeaderCardWidget) :
             QMessageBox.StandardButton.Yes |
             QMessageBox.StandardButton.No
         )
-    
+     
     @pyqtSlot(str)
     def endDown(self, path : str) :
         self.path_video_download = path

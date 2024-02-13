@@ -33,7 +33,7 @@ class Precision(HeaderCardWidget) :
         self.evolution = ProgressRing()
         self.typ = ComboBox()
         self.valider, self.visionner = PushButton("Valider"), PushButton("visionner", self, FIF.MOVIE)
-        self.lang_cible.addItems(list(map(str.capitalize, list(Setup.Setup.lang.keys())[1:])))
+        self.lang_cible.addItems(list(map(str.capitalize, list(Setup.Setup.lang.keys()))))
         self.lang_dep.addItems(list(map(str.capitalize, Setup.Setup.lang.keys())))
         self.grid = QGridLayout()
         hbox = QHBoxLayout()
@@ -167,6 +167,7 @@ class  Interface(QWidget) :
         return {
             "horo_name" : self.video.name.text().strip(),
             "path_srt" : self.video.path_srt,
+            "pdf_or_srt" : self.video.typ.currentText(),
             "type" : Setup.Setup.Convert(int(self.video.precision.text())),
             "language_src" : self.video.lang_dep.currentText(),
             "language_dep" : self.video.lang_cible.currentText()
