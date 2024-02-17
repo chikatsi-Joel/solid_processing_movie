@@ -4,6 +4,7 @@ import random, string
 from ..backbone import audio
 from ..generate.convert_pdf import convertir
 
+
 def get_name_gen(type_ : str) :
     lang = {
             'anglais' : 'en',
@@ -20,9 +21,7 @@ def get_name_gen(type_ : str) :
 def generate_name(number : int) :
     return ''.join([string.ascii_letters[random.randint(0, 10)]+str(random.randint(0, 5)) for _ in range(number)])
 
-def transcribe_audio(video_path : str, pdf_or_srt : str,  language_src : str, language_dest : str, type : str, horo_name : str, path_srt : str):
-    audio_name = generate_name(8)
-    audio_path = audio.extract_audio(video_path, audio_name, 'wav')
+def transcribe_audio(audio_path : str, pdf_or_srt : str,  language_src : str, language_dest : str, type : str, horo_name : str, path_srt : str):
     model = whisper.load_model(type)
     transcribe = whisper.transcribe(model, audio_path, language= get_name_gen(language_src.lower()))
     segments = transcribe['segments']

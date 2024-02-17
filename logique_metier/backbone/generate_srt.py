@@ -1,4 +1,4 @@
-from ..backbone import backbone_srt
+from ..backbone import backbone_srt, audio
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
@@ -16,7 +16,8 @@ class generate_file(QThread) :
         type : str,
         pdf_or_srt : str,
         horo_name : str,
-        path_srt : str
+        path_srt : str,
+        type_movie_or_audio : str
     ) :
         super(generate_file, self).__init__()
         self.videeo_path = file_path
@@ -26,10 +27,15 @@ class generate_file(QThread) :
         self.horo_name = horo_name
         self.path_srt = path_srt
         self._pdf_or_srt = pdf_or_srt
+        self.type_movie_or_audio = type_movie_or_audio
         
     def run(self) :
+        audio_path = self.videeo_path
+        if self.type_movie_or_audio == "Movie" :
+            audio_name = backbone_srt.generate_name(8)
+            audio_path = audio.extract_audio(self.videeo_path, audio_name, 'wav')
         path_srt = backbone_srt.transcribe_audio(
-                video_path = self.videeo_path,
+                audio_path = audio_path,
                 language_dest = self.lang_dest,
                 language_src = self.lang_src,
                 pdf_or_srt = self._pdf_or_srt,

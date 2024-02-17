@@ -147,7 +147,10 @@ class Main_Application(FluentWindow) :
             return
         try :
             params = self.youtube_interface.precision.get_params()
-            params.update({"file_path" : self.path_video})
+            params.update({
+                "file_path" : self.path_video,
+                "type_movie_or_audio" : "Movie"
+                })
             try :
                 send_fil = generate_file(
                     **params,
@@ -176,6 +179,7 @@ class Main_Application(FluentWindow) :
             try :
                 url_video = self.video_retranscribe_interface.load_file.get_params()
                 params.update(url_video)
+                params.update({"type_movie_or_audio" : self.video_retranscribe_interface.load_file.typ_multimedia.currentText()})
                 send_fil = generate_file(
                     **params,
                 )

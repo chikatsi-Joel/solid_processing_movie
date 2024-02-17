@@ -50,15 +50,22 @@ class Load_file(HeaderCardWidget) :
         self.setTitle("Selectionner la Video")
 
         self.tit = SubtitleLabel("File")
+        self.typ_multimedia = ComboBox()
         self.tit_path = SubtitleLabel("Choisir l'emplacement du SRT  : ")
         self.butt = PushButton("Select", self, FIF.FOLDER_ADD)
         self.sep = HorizontalSeparator()
+
+        self.typ_multimedia.addItems([
+            "Movie", 
+            "Audio"
+        ])
 
         h = QGridLayout()
         self.vbox = QVBoxLayout()
         self.item, self.path = None, ""
         self.srt_path = ""
-        h.addWidget(self.tit, 0, 0),h.addWidget(self.butt, 0, 1)
+        h.addWidget(QLabel("Entrer le type Multimedia : "), 0, 0), h.addWidget(self.typ_multimedia, 0, 1)
+        h.addWidget(self.tit, 1, 0),h.addWidget(self.butt, 1, 1)
         self.vbox.addLayout(h)
         self.vbox.addWidget(self.sep)
         
@@ -71,7 +78,7 @@ class Load_file(HeaderCardWidget) :
             self,
             "Select le Video ",
             "/home/chikatsi/Bureau/INFL3/COURS/TP_INF321",
-            "Video (*.mp4 *.avi *.3gp *.webm)"
+            "Video (*.mp4 *.avi *.3gp *.webm)" if self.typ_multimedia == "Movie" else "Video (*.mp3 *.wav *.opus)" 
         )
         if filename:
             path = Path(filename)
