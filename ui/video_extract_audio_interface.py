@@ -6,6 +6,7 @@ from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets.multimedia import SimpleMediaPlayBar, StandardMediaPlayBar, VideoWidget
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_audio
+from interface.decorator import decorator
 
 
 class Pathh(QWidget) :
@@ -91,7 +92,8 @@ class Music(HeaderCardWidget) :
             path = Path(filename)
             self.path_audio = str(path)
             self.selec_audio.path.setText(self.path_audio)
-            
+    
+    @decorator.audio_extract_verification
     def extract_audio(self) :
         self.thread_ = Extract_Thread(self.path, self.path_audio, self.name.text(), self.format_audio.currentText())
         self.thread_.start()
@@ -102,6 +104,14 @@ class Music(HeaderCardWidget) :
             "Opération Réussie",
             "L'extraction a été\néffectué avec succès\n",
             duration = 3000,
+            parent = self
+        )
+
+    def warning(self, title : str, content : str) :
+        InfoBar.warning(
+            title,
+            content,
+            duration = 3500,
             parent = self
         )
         

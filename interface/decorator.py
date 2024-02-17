@@ -34,3 +34,26 @@ class decorator :
         
         return wrap
     
+    @staticmethod
+    def audio_extract_verification(function) :
+        def wrap(self, **kwargs) :
+            if self.path.strip() == "" :
+                self.warning(
+                    "Error",
+                    "Sélectionnez la vidéo à \nRetranscrire"
+                )
+                return
+            if self.path_audio.strip() == "" :
+                self.warning(
+                    "Error",
+                    "Sélectionnez l'url de l'audio \nextrait.."
+                )
+                return
+            if self.name.text().strip() == "" :
+                self.warning(
+                    "Error",
+                    "Entrer le nom de l'audio extrait.."
+                )
+                return
+            return function(self, **kwargs)
+        return wrap

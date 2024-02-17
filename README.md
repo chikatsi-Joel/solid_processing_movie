@@ -22,6 +22,7 @@ To watch a video with its transcription, you need to import the file in srt form
    ```bash
    git clone https://github.com/chikatsi-Joel/solid_processing_movie.git
 
+2. Run the command "pip install -r requirements.txt" at the root of the project to install the dependencies.
 
 ## Youtube Place Interface
 ![Youtube Place Interface](ui/Images/cap1.png)
