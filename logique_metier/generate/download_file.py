@@ -15,7 +15,7 @@ class download_on_youtube(abstract_download) :
 
     def download_file(self) -> str:
         youtube = YouTube(url = self.url_video)
-        youtube = youtube.streams.get_lowest_resolution()
+        youtube = youtube.streams.get_highest_resolution()
         path = youtube.download(
             self.url_destination,
             self.file_name + '.mp4'

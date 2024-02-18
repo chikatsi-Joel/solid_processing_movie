@@ -78,7 +78,7 @@ class Load_file(HeaderCardWidget) :
             self,
             "Select le Video ",
             "/home/chikatsi/Bureau/INFL3/COURS/TP_INF321",
-            "Video (*.mp4 *.avi *.3gp *.webm)" if self.typ_multimedia == "Movie" else "Video (*.mp3 *.wav *.opus)" 
+            "Video (*.mp4 *.avi *.3gp *.webm)" if self.typ_multimedia.currentText() == "Movie" else "Video (*.mp3 *.wav *.opus)" 
         )
         if filename:
             path = Path(filename)
