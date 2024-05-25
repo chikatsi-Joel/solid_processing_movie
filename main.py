@@ -11,15 +11,15 @@ from interface.download import DownLaod
 from interface.decorator import decorator
 from logique_metier.backbone.generate_srt import generate_file
 from logique_metier.generate.download_file import download_on_youtube
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
 import sys
 from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
-        
-from requests.exceptions import InvalidSchema
+from ui.audio_cloning_interface import audio_cloning
 from functools import singledispatchmethod
+import os, sys
 
 
 class Main_Application(FluentWindow) :
@@ -48,13 +48,14 @@ class Main_Application(FluentWindow) :
         self.video_retranscribe_interface = video_retranscript_interface.Interface()
         self.video_extract_audio = video_extract_audio_interface.Interface()
         self.youtube_interface = youtube_interface.Interface()
+        self.audio_cloning = audio_cloning()
 
         self.video_interface.setObjectName("video_interface")
         self.video_retranscribe_interface.setObjectName('video_retranscribe_interface')
         self.video_extract_audio.setObjectName('video_extract_audio')
         self.youtube_interface.setObjectName("youtube_interface")
         self.settings.setObjectName("settings")
-
+        self.audio_cloning.setObjectName("audio_cloning")
         """
         outils configuration visionnage
         """
@@ -82,6 +83,11 @@ class Main_Application(FluentWindow) :
             interface = self.youtube_interface,
             icon = "Images/youtube.png",
             text = "Youtube Processing",
+        )
+        self.addSubInterface(
+            interface = self.audio_cloning,
+            icon = FIF.VIEW,
+            text = "Audio Cloning"
         )
 
         self.addSubInterface(
@@ -259,9 +265,6 @@ class Main_Application(FluentWindow) :
         self.path_srt = path
 
 if __name__=="__main__" :
-    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)  
     app = QApplication(sys.argv)
     input = Main_Application({"id" : 3, "name" : "Joel", 'age' : 20, 'solde' : 189211.1212})
     input.show()

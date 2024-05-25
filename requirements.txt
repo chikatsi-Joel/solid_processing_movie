@@ -4,6 +4,6 @@ pytube
 requests
 moviepy
 googletrans
-PyQt5-Frameless-Window
-PyQt-Fluent-Widgets -i https://pypi.org/simple/
+PyQt6-Frameless-Window
+
 whisper_timestamped

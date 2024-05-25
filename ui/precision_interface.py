@@ -1,10 +1,11 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
 import sys
 from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
 from ui import Setup
+import os
         
 
 class CardSeparator(QWidget):
@@ -14,7 +15,7 @@ class CardSeparator(QWidget):
 
     def paintEvent(self, e):
         painter = QPainter(self)
-        painter.setRenderHints(QPainter.Antialiasing)
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
         if isDarkTheme():
             painter.setPen(QColor(255, 255, 255, 46))
@@ -110,15 +111,27 @@ class Precision(HeaderCardWidget) :
             self.beta_mode()
             
     def beta_mode(self) :
+        
         InfoBar.info(
-            "Mode Payant",
-            content = "La précision que vous avez \nsélectionnez nécessite une grande puissance de \ncalcul",
+            "Information",
+            content = "Dans le cadre de ce projet\nla précision est figé à 56%",
+            isClosable = True,
+            orient = Qt.Orientation.Horizontal,
+            position= InfoBarPosition.TOP_RIGHT,
+            parent = self.par,
+            duration = 3000
+        )
+
+        InfoBar.info(
+            "Haute perfomance",
+            content = "La précision que vous avez \nsélectionnez nécessite une grande puissance de \ncalcul.",
             isClosable = True,
             orient = Qt.Orientation.Horizontal,
             position= InfoBarPosition.TOP_RIGHT,
             parent = self.par,
             duration = 5000
         )
+
 
 
     def selectionner_folder(self) :

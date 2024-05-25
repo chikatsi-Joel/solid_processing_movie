@@ -1,8 +1,8 @@
 
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import sys
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+import sys, os
 from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
 from ui import precision_interface
@@ -29,7 +29,7 @@ class Item(QWidget) :
     def _(self, text : str, parent : QWidget | None = None) :
         super(Item, self).__init__(parent)
         self.hbox = QHBoxLayout(self)
-        ico = ImageLabel("Images/folder.png")
+        ico = ImageLabel("ui/Images/folder.png")
         self.lab = CaptionLabel(text)
         self.frame = QFrame()
         self.hbox.addWidget(SubtitleLabel(">"))
@@ -77,7 +77,7 @@ class Load_file(HeaderCardWidget) :
         filename, ok = QFileDialog.getOpenFileName(
             self,
             "Select le Video ",
-            "/home/chikatsi/Bureau/INFL3/COURS/TP_INF321",
+            "/",
             "Video (*.mp4 *.avi *.3gp *.webm)" if self.typ_multimedia.currentText() == "Movie" else "Video (*.mp3 *.wav *.opus)" 
         )
         if filename:
@@ -125,12 +125,3 @@ class Interface(QWidget) :
     def get_video_path(self) : 
         return self.load_file.path
 
-
-if __name__=="__main__" :
-    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-    app = QApplication(sys.argv)
-    input = Interface()
-    input.show()
-    app.exec()

@@ -1,7 +1,7 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-import typing, sys
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+import typing, sys, os
 from pathlib import Path
 from qfluentwidgets import *
 from qframelesswindow import *
@@ -17,7 +17,7 @@ class CardSeparator(QWidget):
 
     def paintEvent(self, e):
         painter = QPainter(self)
-        painter.setRenderHints(QPainter.Antialiasing)
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
         if isDarkTheme():
             painter.setPen(QColor(255, 255, 255, 46))

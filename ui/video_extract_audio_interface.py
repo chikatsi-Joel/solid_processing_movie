@@ -1,7 +1,7 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import sys
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+import sys, os
 from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets.multimedia import SimpleMediaPlayBar, StandardMediaPlayBar, VideoWidget
@@ -12,7 +12,7 @@ from interface.decorator import decorator
 class Pathh(QWidget) :
     def __init__(self, text) :
         super(Pathh, self).__init__()
-        self.icon = AvatarWidget("Images/folder.png")
+        self.icon = AvatarWidget("ui/Images/folder.png")
         self.icon.setRadius(30)
         self.path = BodyLabel(text)
         self.hbox = QHBoxLayout(self)
@@ -73,12 +73,13 @@ class Music(HeaderCardWidget) :
         filename, ok = QFileDialog.getOpenFileName(
         self,
             "Select a File",
-            "/home/",
+            "/",
             "Videos (*.mp4)"
         )
         if filename:
             path = Path(filename)
             self.path = str(path)
+            self.path = self.path
             self.selec_video.path.setText(self.path)
             
 
@@ -86,11 +87,12 @@ class Music(HeaderCardWidget) :
         filename = QFileDialog.getExistingDirectory(
         self,
             "Selectionnez un Dossier",
-            "/home/",
+            "/",
         )
         if filename:
             path = Path(filename)
             self.path_audio = str(path)
+            self.path_audio = self.path_audio
             self.selec_audio.path.setText(self.path_audio)
     
     @decorator.audio_extract_verification

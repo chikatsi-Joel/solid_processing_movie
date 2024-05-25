@@ -1,5 +1,5 @@
-from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtWidgets import QWidget
+from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt6.QtWidgets import QWidget
 from pytube.exceptions import RegexMatchError
 from logique_metier.download_file import download_file_logic
 from logique_metier.abstract_logic.abstract_download import abstract_download 

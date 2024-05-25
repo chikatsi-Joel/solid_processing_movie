@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
 
 from qfluentwidgets import *
 from qframelesswindow import *
@@ -41,7 +41,7 @@ class Prof(SimpleCardWidget) :
         path_image : str = None
     ) :
         super(Prof, self).__init__()
-        self.image_ic = ImageLabel(path_image if path_image is not None else "Images/user.png", self)
+        self.image_ic = ImageLabel(path_image if path_image is not None else "Images/user.png"), self
         self.image_ic.setBorderRadius(8, 8, 8, 8)
         self.image_ic.scaledToWidth(120)
         
@@ -90,9 +90,9 @@ class SystemReq(HeaderCardWidget) :
         super(SystemReq, self).__init__()    
         self.setTitle('Information Contact')
         self.facebook_link = HyperlinkButton("https://www.facebook.com/gradi.piedjou", "Facebook", self, "Images/facebook.png")
-        self.youtub = HyperlinkButton("https://www.youtube.com/channel/UCmITTbMFloRiLhW2QCkci-A", "Youtube", self, "Images/you.png")
-        self.twitter = HyperlinkButton("https://www.facebook.com/gradi.piedjou", "twitter", self, "Images/twitter.png")
-        self.vbox = QHBoxLayout()
+        selfyoutub = HyperlinkButton("https://www.youtube.com/channel/UCmITTbMFloRiLhW2QCkci-A", "Youtube", self, "Images/you.png")
+        selftwitter = HyperlinkButton("https://www.facebook.com/gradi.piedjou", "twitter", self, "Images/twitter.png")
+        selfvbox = QHBoxLayout()
         self.vbox.addWidget(self.facebook_link), self.vbox.addWidget(self.twitter)
         self.vbox.addWidget(self.youtub)
         
@@ -146,7 +146,7 @@ class parameters_interface(QWidget) :
         self.vbox = QHBoxLayout(self)
         self.prof = HyperlinkCard(
             "https://github.com/chikatsi-Joel/solid_processing_movie.git",
-            "lien git du projet", FIF.GITHUB, "Chikatsi Joel", "Nom du développeur : Chikatsi Joel\nEmail : kappachikatsi@gmail.com")
+            "lien git du projet", FIF.GITHUB, "Projet Gratuit", "Developpé par Team's Smoke's")
 
         #self.vbox.addSpacerItem(QSpacerItem(200, 200))
         self.vbox.addWidget(self.prof, 0, Qt.AlignmentFlag.AlignCenter)

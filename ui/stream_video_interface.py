@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
-from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+from PyQt6.QtMultimedia import QMediaFormat, QMediaPlayer
+from PyQt6.QtMultimediaWidgets import QVideoWidget
 import sys
 from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
@@ -57,19 +57,19 @@ class VideoWidget(QVideoWidget):
     def __init__(self, parent=None):
         super(VideoWidget, self).__init__(parent)
  
-        self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored)
  
         p = self.palette()
-        p.setColor(QPalette.Window, Qt.black)
+        p.setColor(QPalette.ColorGroup.Normal, Qt.GlobalColor.black)
         self.setPalette(p)
  
-        self.setAttribute(Qt.WA_OpaquePaintEvent)
+        self.setAttribute(Qt.WidgetAttribute.WA_OpaquePaintEvent)
  
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Escape and self.isFullScreen():
+        if event.key() == Qt.Key.Key_Escape and self.isFullScreen():
             self.setFullScreen(False)
             event.accept()
-        elif event.key() == Qt.Key_Enter and event.modifiers() & Qt.Key_Alt:
+        elif event.key() == Qt.Key.Key_Enter and event.modifiers() & Qt.Key.Key_Alt:
             self.setFullScreen(not self.isFullScreen())
             event.accept()
         else:
@@ -85,7 +85,7 @@ class Video_Stream(QWidget) :
         super(Video_Stream, self).__init__(parent)
         self.vbox = QHBoxLayout(self)
         self.media = QVideoWidget()
-        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.mediaPlayer = QMediaPlayer(None)
         self.positi = SimpleMediaPlayBar()
         self.barr = Barre(self)
         h, h_2, h_subtit = QHBoxLayout(), QVBoxLayout(), QHBoxLayout()
@@ -115,7 +115,7 @@ class Video_Stream(QWidget) :
         self.mediaPlayer.setVideoOutput(self.media)
         self.mediaPlayer.positionChanged.connect(self.positionChanged)
         self.mediaPlayer.durationChanged.connect(self.durationChanged)
-        self.mediaPlayer.stateChanged.connect(self.mediaStateChanged)
+        self.mediaPlayer.sourceChanged.connect(self.mediaStateChanged)
         self.positi.playButton.clicked.connect(self.play)
         
         self.positi.volumeButton.volumeChanged.connect(self.setVolume)
@@ -127,14 +127,14 @@ class Video_Stream(QWidget) :
         filename, ok = QFileDialog.getOpenFileName(
             self,
             "Select le Video ",
-            "/home/chikatsi/Bureau/INFL3/COURS/TP_INF321",
+            "/",
             "Video (*.mp4 *.avi *.3gp *.webm)"
         )
         if filename:
             path = Path(filename)
             self.path_video = str(path)
             self.mediaPlayer.setMedia(
-                    QMediaContent(QUrl.fromLocalFile(filename)))
+                    QMediaFormat(QUrl.fromLocalFile(filename)))
             self.mediaPlayer.play()
             InfoBar.success(
                 "Chargement réussi",
@@ -145,18 +145,21 @@ class Video_Stream(QWidget) :
                 position = InfoBarPosition.TOP,
                 parent = self
             )
+            self.positi.playButton.setPlay(True)
             
     def mediaStateChanged(self, state):
-        if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
-            self.positi.playButton.setIcon(FIF.PLAY)
+        if self.mediaPlayer.state() == QMediaPlayer.PlaybackState.PlayingState:
+            self.positi.playButton.setPlay(True)
         else:
-            self.positi.playButton.setIcon(FIF.PAUSE)
+            self.positi.playButton.setPlay(False)
             
     def play(self):
-        if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
+        if self.mediaPlayer.state() == QMediaPlayer.PlaybackState.PlayingState:
             self.mediaPlayer.pause()
+            self.positi.playButton.setIcon(FIF.PAUSE_BOLD)
         else:
             self.mediaPlayer.play()
+            self.positi.playButton.setIcon(FIF.PLAY_SOLID)
             
     def positionChanged(self, position):
         self.positi.progressSlider.setValue(position)
@@ -201,7 +204,7 @@ class Video_Stream(QWidget) :
         filename, ok = QFileDialog.getOpenFileName(
             self,
             "Select le SRT ",
-            "/home/chikatsi/Bureau/INFL3/COURS/TP_INF321",
+            "/",
             "SRT (*.srt)"
         )
         if filename:
@@ -221,17 +224,9 @@ class Video_Stream(QWidget) :
 
     def play_video_slots(self) :
         self.mediaPlayer.setMedia(
-                    QMediaContent(QUrl.fromLocalFile(self.path_video)))
+                    QMediaFormat(QUrl.fromLocalFile(self.path_video)))
         self.mediaPlayer.play()
         self.subtitles = SubRipFile.open(self.path_srt)
         self.current_subtitle_index = None
         
         
-if __name__=='__main__' :
-    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-    app = QApplication(sys.argv)
-    video_str = Video_Stream()
-    video_str.show()
-    app.exec()
