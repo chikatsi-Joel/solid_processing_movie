@@ -5,5 +5,5 @@ requests
 moviepy
 googletrans
 PyQt6-Frameless-Window
-
+TTS
 whisper_timestamped

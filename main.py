@@ -86,7 +86,7 @@ class Main_Application(FluentWindow) :
         )
         self.addSubInterface(
             interface = self.audio_cloning,
-            icon = FIF.VIEW,
+            icon = FIF.DEVELOPER_TOOLS,
             text = "Audio Cloning"
         )
 
