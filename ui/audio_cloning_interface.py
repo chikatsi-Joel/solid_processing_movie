@@ -23,59 +23,61 @@ class Pathh(QWidget) :
 class cloning(HeaderCardWidget) :
     def __init__(self ) :
         super(cloning, self).__init__()
-        self.setTitle("Cloning Audio VOice")
+        self.setTitle("Extraire l'audio d'une Video")
+        self.langugage = ComboBox(self)
         self.name = LineEdit()
         self.valider = PushButton("Valider")
-        
         self.grid = QGridLayout()
         self.montant_tarifaire = BodyLabel("")
         self.montant = TitleLabel("")
-        self.output_audio = LineEdit()
-        self.select_video = TextEdit()
-        self.langugage = ComboBox()
+        self.text = TextEdit()
+        self.select_repertoire = TransparentToolButton(FIF.FOLDER_ADD)
         self.select_audio = TransparentToolButton(FIF.FOLDER_ADD)
         b = QHBoxLayout()
-        self.selec_video, self.selec_audio = Pathh(""), Pathh("")
-        self.langugage.addItems(['en', 'fr'])
+        self.repertoire, self.selec_audio = Pathh(""), Pathh("")
         self.path, self.path_audio = "", ""
         
-        selec_video, selec_audio = QHBoxLayout(), QHBoxLayout()
-
+        self.langugage.addItems(['en', 'fr'])
+        repertoire, selec_audio = QHBoxLayout(), QHBoxLayout()
         selec_audio.addWidget(self.select_audio), selec_audio.addWidget(self.selec_audio)
-        selec_video.addWidget(self.select_video), selec_video.addWidget(self.selec_video)
+        repertoire.addWidget(self.select_repertoire), repertoire.addWidget(self.repertoire)
         b.addWidget(self.montant_tarifaire), b.addStretch(), b.addWidget(VerticalSeparator()), b.addStretch(), b.addWidget(self.montant)
-        self.grid.addWidget(BodyLabel("Entrer le texte : "), 1, 0), self.grid.addLayout(selec_video, 1, 1, alignment = Qt.AlignmentFlag.AlignLeft)
-        self.grid.addWidget(BodyLabel("Sélectionnez l'audio de synthèse : "), 2, 0), self.grid.addLayout(selec_audio, 2, 1, alignment = Qt.AlignmentFlag.AlignLeft)
-        self.grid.addWidget(BodyLabel("NOm de l'audio de Sortie: "), 3, 0), self.grid.addWidget(self.output_audio, 3, 1)
-        self.grid.addWidget(BodyLabel("Nom du fichier audio : "), 4, 0), self.grid.addWidget(self.name, 4, 1)
-        self.grid.addWidget(BodyLabel("Language : "), 5, 0), self.grid.addWidget(self.langugage, 5, 1)
-        self.grid.addWidget(self.valider, 7, 0, alignment = Qt.AlignmentFlag.AlignLeft)
+        self.grid.addWidget(BodyLabel("Sélectionnez le repertoire de destination : "), 1, 0), self.grid.addLayout(repertoire, 1, 1)
+        self.grid.addWidget(BodyLabel("Sélectionnez l'audio échantillon : "), 2, 0), self.grid.addLayout(selec_audio, 2, 1, alignment = Qt.AlignmentFlag.AlignLeft)
+        self.grid.addWidget(BodyLabel("Text de tuning : "), 3, 0), self.grid.addWidget(self.text, 3, 1, alignment = Qt.AlignmentFlag.AlignLeft)
+        self.grid.addWidget(BodyLabel("langugage de  l'audio : "), 4, 0), self.grid.addWidget(self.langugage, 4, 1)
+        self.grid.addWidget(BodyLabel("Nom du fichier audio : "), 5, 0), self.grid.addWidget(self.name, 5, 1)
+        self.grid.addWidget(self.valider, 6, 0, alignment = Qt.AlignmentFlag.AlignLeft)
         self.grid.setVerticalSpacing(20)
         self.viewLayout.addLayout(self.grid)
         
         self.setFixedSize(600, 500)
         
+        self.select_repertoire.clicked.connect(self.slots_audio)
         self.select_audio.clicked.connect(self.slots_path)
 
    
-
-    def slots_path(self) :
-        filename = QFileDialog.getOpenFileName(
+    def slots_audio(self) :
+        filename, ok = QFileDialog.getOpenFileName(
         self,
-            "Selectionnez un Dossier",
-            "/home/chikatsi/Bureau",
+            "Select a File",
+            "/",
             "Audio (*.wav)"
         )
         if filename:
             path = Path(filename)
             self.path_audio = str(path)
-            self.path_audio = self.path_audio
-            InfoBar.success(
-            "Chargement Réussie",
-            "L'audio a été chargé avec succcès..\n",
-            duration = 3000,
-            parent = self.parent()
+            
+
+    def slots_path(self) :
+        filename = QFileDialog.getExistingDirectory(
+        self,
+            "Selectionnez un Dossier",
+            "/",
         )
+        if filename:
+            path = Path(filename)
+            self.path = str(path)
    
     def sukess(self) :
         InfoBar.success(
@@ -100,14 +102,13 @@ class audio_cloning(QWidget) :
         self.cloning = cloning()
         self.vbox.addWidget(self.cloning, 0, Qt.AlignmentFlag.AlignCenter)
         self.setContentsMargins(40, 40, 40, 40)
+
+    def apply(self) :
+        tts_apply(
+            self.cloning.text.toPlainText(),
+            self.cloning.path_audio,
+            self.cloning.langugage.currentText(),
+            self.cloning.path + '/' + self.cloning.name.text()
+        )
         
-
-
-if __name__=="__main__" :
-    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-    app = QApplication(sys.argv)
-    input = audio_cloning()
-    input.show()
-    app.exec()
+        
